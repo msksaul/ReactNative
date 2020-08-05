@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import Contact from './ContactComponent';
-import AboutS from './hola';
+import About from './AboutComponent';
 import DishDetail from './DishDetailComponent';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
@@ -96,7 +96,7 @@ function AboutNavigatorScreen() {
           }}>
           <AboutNavigator.Screen
               name="About Us"
-              component={AboutS}
+              component={About}
           />             
       </AboutNavigator.Navigator>
   )
