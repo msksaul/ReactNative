@@ -5,7 +5,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import DishDetail from './DishDetailComponent';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, DrawerActions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const MenuNavigator = createStackNavigator();

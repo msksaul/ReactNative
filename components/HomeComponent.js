@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import { DISHES } from '../shared/dishes';
-import { Promotions, PROMOTIONS } from '../shared/promotions';
+import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
 
 function RenderItem(props) {

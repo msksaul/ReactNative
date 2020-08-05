@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Card, ListItem } from 'react-native-elements';
-import { Text, StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
+import { Text, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LEADERS } from '../shared/leaders';
-import { HeaderTitle } from '@react-navigation/stack';
 
 function History() {
   return(
