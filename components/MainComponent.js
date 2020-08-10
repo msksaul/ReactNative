@@ -10,6 +10,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import DishDetail from './DishDetailComponent';
 import Reservation from './ReservationComponent';
+import Favorites from './FavoriteComponent'
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders, postComment } from '../redux/ActionCreators';
 
@@ -218,6 +219,40 @@ function ReservationNavigatorScreen() {
   )
 }
 
+const FavoritesNavigator = createStackNavigator();
+
+function FavoritesNavigatorScreen() {
+  return (
+    <FavoritesNavigator.Navigator
+          screenOptions={{
+              headerStyle: {
+                  backgroundColor: "#512DA8"
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                  color: "#fff"            
+              }
+          }}>
+          <FavoritesNavigator.Screen
+              name="Favorites"
+              component={Favorites}
+              options={({navigation}) => ({
+                headerLeft: () => (
+                    <Icon
+                      name='menu'
+                      size={24}
+                      color='white'
+                      iconStyle={{marginLeft:10}}
+                      onPress={() => navigation.toggleDrawer()}>
+                    </Icon>
+                )
+              })}
+          />            
+      </FavoritesNavigator.Navigator>
+  )
+}
+
+
 const MainNavigator = createDrawerNavigator();
 
 function MainNavigatorScreen() {
@@ -278,6 +313,20 @@ function MainNavigatorScreen() {
                         name='address-card'
                         type='font-awesome'
                         size={22}
+                        color={tintColor}>
+                    </Icon>
+                )
+            }}
+        />
+        <MainNavigator.Screen 
+            name='My Favorites' 
+            component={FavoritesNavigatorScreen}
+            options={{
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='heart'
+                        type='font-awesome'
+                        size={24}
                         color={tintColor}>
                     </Icon>
                 )
