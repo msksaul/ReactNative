@@ -11,7 +11,7 @@ import About from './AboutComponent';
 import DishDetail from './DishDetailComponent';
 import Reservation from './ReservationComponent';
 import { connect } from 'react-redux';
-import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders, postComment } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -26,7 +26,8 @@ const mapDispatchToProps = dispatch => ({
     fetchDishes: () => dispatch(fetchDishes()),
     fetchComments: () => dispatch(fetchComments()),
     fetchPromos: () => dispatch(fetchPromos()),
-    fetchLeaders: () => dispatch(fetchLeaders())
+    fetchLeaders: () => dispatch(fetchLeaders()),
+    postComment: () => dispatch(postComment())
 })
 
 const CustomDrawerContentComponent = (props) => (
