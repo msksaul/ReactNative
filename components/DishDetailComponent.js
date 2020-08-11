@@ -23,7 +23,7 @@ function RenderDish(props) {
 
   const dish = props.dish;
 
-  const handleViewRef = ref => this.view = ref
+  const handleViewRef = ref => dish.view = ref
 
   const recognizeDrag = ({moveX, moveY, dx, dy}) => {
     if (dx < -200)
@@ -37,7 +37,7 @@ function RenderDish(props) {
       return true
     },
     onPanResponderGrant: () => {
-      this.view.rubberBand(1000)
+      dish.view.rubberBand(1000)
         .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'))
     },
     onPanResponderEnd: (e, gestureState) => {
