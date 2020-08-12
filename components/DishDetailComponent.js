@@ -27,9 +27,9 @@ function RenderDish(props) {
 
   const recognizeDrag = ({moveX, moveY, dx, dy}) => {
     if (dx < -200)
-      return true
-    else
-      return false
+      return 'favorite'
+    else if (dx > 200)
+      return 'comment'
   }
 
   const panResponder = PanResponder.create({
@@ -41,7 +41,7 @@ function RenderDish(props) {
         .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'))
     },
     onPanResponderEnd: (e, gestureState) => {
-      if (recognizeDrag(gestureState))
+      if (recognizeDrag(gestureState) === 'favorite')
         Alert.alert(
           'Add to favorites?',
           'Are you sure you wish to add ' + dish.name + 'to your favorites?',
@@ -58,6 +58,8 @@ function RenderDish(props) {
           ],
           { cancelable: false }
         )
+      else if (recognizeDrag(gestureState) === 'comment')
+          props.toggleModal()
       return true
     }
   })
