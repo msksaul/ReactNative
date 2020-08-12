@@ -10,7 +10,8 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import DishDetail from './DishDetailComponent';
 import Reservation from './ReservationComponent';
-import Favorites from './FavoriteComponent'
+import Favorites from './FavoriteComponent';
+import Login from './LoginComponent';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders, postComment } from '../redux/ActionCreators';
 
@@ -46,6 +47,39 @@ const CustomDrawerContentComponent = (props) => (
         <DrawerItemList {...props}/>
     </ScrollView>
 )
+
+const LoginNavigator = createStackNavigator();
+
+function LoginNavigatorScreen() {
+  return (
+    <LoginNavigator.Navigator
+          screenOptions={{
+              headerStyle: {
+                  backgroundColor: "#512DA8"
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                  color: "#fff"            
+              }
+          }}>
+          <LoginNavigator.Screen
+              name="Login"
+              component={Login}
+              options={({navigation}) => ({
+                headerLeft: () => (
+                    <Icon
+                      name='menu'
+                      size={24}
+                      color='white'
+                      iconStyle={{marginLeft:10}}
+                      onPress={() => navigation.toggleDrawer()}>
+                    </Icon>
+                )
+              })}
+          />            
+      </LoginNavigator.Navigator>
+  )
+}
 
 const MenuNavigator = createStackNavigator();
 
@@ -224,6 +258,7 @@ const FavoritesNavigator = createStackNavigator();
 function FavoritesNavigatorScreen() {
   return (
     <FavoritesNavigator.Navigator
+          initialRouteName='Favorites'
           screenOptions={{
               headerStyle: {
                   backgroundColor: "#512DA8"
@@ -247,7 +282,12 @@ function FavoritesNavigatorScreen() {
                     </Icon>
                 )
               })}
-          />            
+          />
+          <MenuNavigator.Screen
+              name="DishDetail"
+              component={DishDetail}
+              options={{ headerTitle: "Dish Detail"}}
+          />             
       </FavoritesNavigator.Navigator>
   )
 }
@@ -262,6 +302,20 @@ function MainNavigatorScreen() {
         drawerStyle={{ backgroundColor: '#D1C4E9' }}
         drawerContent={props => <CustomDrawerContentComponent {...props}/>}
         >
+        <MainNavigator.Screen 
+            name='Login' 
+            component={LoginNavigatorScreen}
+            options={{
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='sign-in'
+                        type='font-awesome'
+                        size={23}
+                        color={tintColor}>
+                    </Icon>
+                )
+            }}
+        />
         <MainNavigator.Screen 
             name='Home' 
             component={HomeNavigatorScreen}
