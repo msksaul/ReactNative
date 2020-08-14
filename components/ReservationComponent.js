@@ -3,7 +3,8 @@ import { Text, View, StyleSheet, Picker, Switch, Button, Alert } from 'react-nat
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
 import { Notifications } from 'expo';
-import * as Permissions from 'expo-permissions'
+import * as Permissions from 'expo-permissions';
+import * as Calendar from 'expo-calendar';
 
 class Reservation extends Component {
 
@@ -43,12 +44,39 @@ class Reservation extends Component {
         {
           text: 'OK',
           onPress: () => {
-            this.presentLocalNotification(this.state.date)
+            this.presentLocalNotification(this.state.date);
+            this.addReservartionToCalendar(this.state.date)
           }
         },
       ],
       {cancelable: false}
     )
+  }
+
+  async obtainCalendarPermission() {
+    let permission = await Permissions.getAsync(Permissions.CALENDAR)
+    if (permission.status !== 'granted') {
+      permission = await Permissions.askAsync(Permissions.CALENDAR)
+      if (permission.status !== 'granted') {
+        Alert.alert('Permission not granted to use calendar')
+      }
+    }
+    return permission      
+  }
+
+  async addReservartionToCalendar(date) {
+    await this.obtainCalendarPermission()
+
+    const startDate = new Date(Date.parse(date))
+    const endDate = new Date(Date.parse(date) + 2*60*60*1000)
+    const calendar = await Calendar.getDefaultCalendarAsync()
+    Calendar.createEventAsync(calendar.id, {
+      title: 'Con Fusion Table Reservation',
+      startDate: startDate,
+      endDate: endDate,
+      timeZone: 'Asia/Hong_Kong',
+      location: '121, Clear Water Bay Road, Kowloon, Hong Kong'
+    })
   }
 
   async obtainNotificationPremission() {
