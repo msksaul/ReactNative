@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, View, Image, StyleSheet, ToastAndroid } from 'react-native';
+import { ScrollView, Text, View, Image, StyleSheet, ToastAndroid, Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -411,38 +411,34 @@ class Main extends Component {
       this.props.fetchComments();
       this.props.fetchPromos();
       this.props.fetchLeaders();
-
-      NetInfo.getConnectInfo()
-        .then((connectionInfo) => {
-            ToastAndroid.show('Initial Network Connectivity Type: ' + connectionInfo.type
-             + ', effectiveType: ' + connectionInfo.effectiveType, 
-            ToastAndroid.LONG)
-        })
-
-      NetInfo.addEventListener('connectionChange', this.handleConnectivityChange)
+      this.unsub;
   }
 
+  unsub = NetInfo.addEventListener(connectionChange => this.handleConnectivityChange(connectionChange))
+
   componentWillMount() {
-      NetInfo.removeEventListener('connectionChange', this.handleConnectivityChange)
+    console.log('remove')
   }
 
   handleConnectivityChange = (connectionInfo) => {
-      switch (connectionInfo.type) {
-          case 'none':
-            ToastAndroid.show('You are now offline!', ToastAndroid.LOG)
-            break
-          case 'wifi':
-            ToastAndroid.show('You are now connected to WIFI!', ToastAndroid.LOG)
-            break
-          case 'cellular':
-            ToastAndroid.show('You are now connected to Cellular!', ToastAndroid.LOG)
-            break
-          case 'unknown':
-            ToastAndroid.show('You now have aun unknown connection!', ToastAndroid.LOG)
-            break
-          default:
-            break
-      }
+      if (Platform.OS !== 'ios') {
+        switch (connectionInfo.type) {
+            case 'none':
+                ToastAndroid.show('You are now offline!', ToastAndroid.LOG)
+                break
+            case 'wifi':
+                ToastAndroid.show('You are now connected to WIFI!', ToastAndroid.LOG)
+                break
+            case 'cellular':
+                ToastAndroid.show('You are now connected to Cellular!', ToastAndroid.LOG)
+                break
+            case 'unknown':
+                ToastAndroid.show('You now have aun unknown connection!', ToastAndroid.LOG)
+                break
+            default:
+                break
+        }
+     }
   }
 
   render() {
